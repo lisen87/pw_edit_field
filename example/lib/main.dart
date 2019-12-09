@@ -35,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String _message;
 
+  TextEditingController _controller = TextEditingController();
   //虚拟
   void _handleKeyEvent(RawKeyEvent event) {
     setState(() {
@@ -51,6 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       print(_message);
     });
+  }
+  @override
+  void dispose() {
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {
@@ -92,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onInputDone: (pw) {
                 this.pw = pw;
+
                 setState(() {});
               },
             ),
@@ -119,8 +125,13 @@ class _MyHomePageState extends State<MyHomePage> {
             textFieldCount: 6,
             onInputDone: (pw){
               this.pw = pw;
-              setState(() {});
+              setState(() {
+              });
             },
+          ),
+            PWEditField(
+            textFieldCount: 3,
+            controller: _controller,
           ),
             Padding(
               padding: const EdgeInsets.all(8.0),

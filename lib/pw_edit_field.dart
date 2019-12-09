@@ -10,6 +10,8 @@ class PWEditField extends StatefulWidget {
   ///
   final ValueChanged<String> onInputDone;
 
+  final ValueChanged<String> onChanged;
+
   ///密码框数量 Number of password boxes
   ///
   final int textFieldCount;
@@ -35,6 +37,7 @@ class PWEditField extends StatefulWidget {
   final List<TextInputFormatter> inputFormatters;
   final BoxDecoration focusDecoration;
   final BoxDecoration unFocusDecoration;
+  final TextEditingController controller;
 
   /// 只能输入数字 Only numbers can be entered
   /// inputFormatters = [WhitelistingTextInputFormatter(RegExp("[0-9]")),]
@@ -55,6 +58,8 @@ class PWEditField extends StatefulWidget {
     Decoration focusDecoration,
     Decoration unFocusDecoration,
     this.onInputDone,
+    this.onChanged,
+    TextEditingController controller,
   })  : focusDecoration = focusDecoration ??
             BoxDecoration(
               border: Border.all(color: Colors.blue, width: 1),
@@ -64,7 +69,8 @@ class PWEditField extends StatefulWidget {
             BoxDecoration(
               border: Border.all(color: Colors.grey, width: 1),
               borderRadius: BorderRadius.all(Radius.circular(2)),
-            );
+            ),
+        controller = controller == null ? TextEditingController() : controller;
 
   @override
   State<StatefulWidget> createState() {
@@ -73,9 +79,9 @@ class PWEditField extends StatefulWidget {
 }
 
 class PWEditFieldState extends State<PWEditField> {
-  TextEditingController _controller = TextEditingController();
   FocusNode _focusNode = FocusNode();
   int _currentIndex = -1;
+
   @override
   void initState() {
     super.initState();
@@ -125,7 +131,7 @@ class PWEditFieldState extends State<PWEditField> {
         onTap: () {
           _focusNode.unfocus();
           FocusScope.of(context).requestFocus(_focusNode);
-          _currentIndex = _controller.text.length;
+          _currentIndex = widget.controller.text.length;
           setState(() {});
         },
         child: Container(
@@ -144,7 +150,7 @@ class PWEditFieldState extends State<PWEditField> {
 
   Widget getTextWidget(int index) {
     String data = "";
-    String text = _controller.text;
+    String text = widget.controller.text;
     if (text.length > index) {
       data = widget.obscureText ? "●" : text.substring(index, index + 1);
     }
@@ -165,7 +171,7 @@ class PWEditFieldState extends State<PWEditField> {
         focusNode: _focusNode,
         showCursor: false,
         autofocus: widget.autoFocus,
-        controller: _controller,
+        controller: widget.controller,
         maxLength: widget.textFieldCount,
         maxLines: 1,
         obscureText: widget.obscureText,
@@ -183,11 +189,15 @@ class PWEditFieldState extends State<PWEditField> {
         ),
         textAlign: TextAlign.center,
         onChanged: (String text) {
+          if (widget.onChanged != null) {
+            widget.onChanged(text);
+          }
           _currentIndex = text.length;
           setState(() {});
-          if (widget.onInputDone != null && text.length == widget.textFieldCount) {
-            widget.onInputDone(_controller.text);
-            _controller.text = "";
+          if (widget.onInputDone != null &&
+              text.length == widget.textFieldCount) {
+            widget.onInputDone(widget.controller.text);
+            widget.controller.text = "";
             _focusNode.unfocus();
           }
         },
@@ -197,7 +207,7 @@ class PWEditFieldState extends State<PWEditField> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    widget.controller.dispose();
     _focusNode.dispose();
     super.dispose();
   }
