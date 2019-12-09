@@ -1,14 +1,30 @@
-# pw_edit_field
+# [pw_edit_field](https://github.com/lisen87/pw_edit_field)
 
-A new Flutter package project.
+flutter 密码输入框
 
-## Getting Started
+flutter password input box
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+> Supported  Platforms
+> * Android
+> * iOS
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## How to Use
+
+```yaml
+# add this line to your dependencies
+pw_edit_field: ^1.0.0
+```
+
+```dart
+import 'package:pw_edit_field/PasswordWidget.dart';
+```
+
+```dart
+  PasswordWidget(
+    textFieldCount: 6,
+    onInputDone: (pw){
+      /// pw Your password
+      
+    },
+  ),
+```

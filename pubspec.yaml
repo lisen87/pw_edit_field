@@ -1,8 +1,8 @@
 name: pw_edit_field
-description: A new Flutter package project.
-version: 0.0.1
-author:
-homepage:
+description: flutter Password input box, pure dart language
+version: 1.0.0
+author: lisen <453354858@qq.com>
+homepage: https://github.com/lisen87/pw_edit_field
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
