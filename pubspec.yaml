@@ -1,6 +1,6 @@
 name: pw_edit_field
 description: flutter Password input box, pure dart language.Support Android and iOS,No compatibility issues
-version: 1.0.1
+version: 1.0.1+1
 author: lisen <453354858@qq.com>
 homepage: https://github.com/lisen87/pw_edit_field
 

@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,43 +30,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String pw = "";
-  FocusNode _focusNode = FocusNode();
-
-  String _message;
 
   TextEditingController _controller = TextEditingController();
-  //虚拟
-  void _handleKeyEvent(RawKeyEvent event) {
-    setState(() {
-      if (event.logicalKey == LogicalKeyboardKey.keyQ) {
-        _message = 'Pressed the "Q" key!';
-      } else {
-        if (kReleaseMode) {
-          _message =
-              'Not a Q: Key label is "${event.logicalKey.keyLabel ?? '<none>'}"';
-        } else {
-          // This will only print useful information in debug mode.
-          _message = 'Not a Q: Pressed ${event.logicalKey.debugName}';
-        }
-      }
-      print(_message);
-    });
-  }
-  @override
-  void dispose() {
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

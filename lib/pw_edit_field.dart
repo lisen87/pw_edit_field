@@ -78,7 +78,7 @@ class PWEditField extends StatefulWidget {
   }
 }
 
-class PWEditFieldState extends State<PWEditField> {
+class PWEditFieldState extends State<PWEditField> with AutomaticKeepAliveClientMixin {
   FocusNode _focusNode = FocusNode();
   int _currentIndex = -1;
 
@@ -211,4 +211,7 @@ class PWEditFieldState extends State<PWEditField> {
     _focusNode.dispose();
     super.dispose();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
