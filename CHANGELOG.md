@@ -1,3 +1,6 @@
+## [1.0.1+2]
+* 处理输入框遮挡问题
+* Handle input box occlusion
 ## [1.0.1+1]
 * 保持输入状态
 * Keep input

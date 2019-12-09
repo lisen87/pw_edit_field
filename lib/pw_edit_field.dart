@@ -52,6 +52,7 @@ class PWEditField extends StatefulWidget {
     this.textStyle = const TextStyle(
       fontSize: 12,
       color: Colors.black54,
+      decoration: TextDecoration.none,
     ),
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
@@ -78,7 +79,7 @@ class PWEditField extends StatefulWidget {
   }
 }
 
-class PWEditFieldState extends State<PWEditField> with AutomaticKeepAliveClientMixin {
+class PWEditFieldState extends State<PWEditField> {
   FocusNode _focusNode = FocusNode();
   int _currentIndex = -1;
 
@@ -101,6 +102,7 @@ class PWEditFieldState extends State<PWEditField> with AutomaticKeepAliveClientM
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Stack(
+        alignment: AlignmentDirectional.bottomStart,
         children: <Widget>[
           getTextField(),
           Container(
@@ -111,6 +113,7 @@ class PWEditFieldState extends State<PWEditField> with AutomaticKeepAliveClientM
               children: getChildren(),
             ),
           ),
+
         ],
       ),
     );
@@ -169,7 +172,7 @@ class PWEditFieldState extends State<PWEditField> with AutomaticKeepAliveClientM
       child: TextField(
         enableInteractiveSelection: false,
         focusNode: _focusNode,
-        showCursor: false,
+//        showCursor: false,
         autofocus: widget.autoFocus,
         controller: widget.controller,
         maxLength: widget.textFieldCount,
@@ -207,11 +210,8 @@ class PWEditFieldState extends State<PWEditField> with AutomaticKeepAliveClientM
 
   @override
   void dispose() {
-    widget.controller.dispose();
     _focusNode.dispose();
     super.dispose();
   }
 
-  @override
-  bool get wantKeepAlive => true;
 }

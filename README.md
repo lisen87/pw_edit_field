@@ -12,7 +12,7 @@ flutter password input box
 
 ```yaml
 # add this line to your dependencies
-pw_edit_field: ^1.0.1+1
+pw_edit_field: ^1.0.1+2
 ```
 
 ```dart
