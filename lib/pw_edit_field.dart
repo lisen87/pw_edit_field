@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 /// Created by liSen on 2019/12/7 15:00.
 /// @author liSen < 453354858@qq.com >
 
-class PasswordWidget extends StatefulWidget {
+class PWEditField extends StatefulWidget {
   ///所有密码框输入完成后监听 Listen after all password boxes are entered
   ///
   final ValueChanged<String> onInputDone;
@@ -39,7 +39,7 @@ class PasswordWidget extends StatefulWidget {
   /// 只能输入数字 Only numbers can be entered
   /// inputFormatters = [WhitelistingTextInputFormatter(RegExp("[0-9]")),]
 
-  PasswordWidget({
+  PWEditField({
     @required this.textFieldCount,
     this.textFieldWidth = 30,
     this.textFieldHeight = 30,
@@ -68,11 +68,11 @@ class PasswordWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return PasswordWidgetState();
+    return PWEditFieldState();
   }
 }
 
-class PasswordWidgetState extends State<PasswordWidget> {
+class PWEditFieldState extends State<PWEditField> {
   TextEditingController _controller = TextEditingController();
   FocusNode _focusNode = FocusNode();
   int _currentIndex = -1;

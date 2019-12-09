@@ -16,15 +16,16 @@ pw_edit_field: ^1.0.0
 ```
 
 ```dart
-import 'package:pw_edit_field/PasswordWidget.dart';
+import 'package:pw_edit_field/pw_edit_field.dart';
 ```
 
 ```dart
-  PasswordWidget(
+ PWEditField(
     textFieldCount: 6,
     onInputDone: (pw){
-      /// pw Your password
-      
+      this.pw = pw;
+      setState(() {});
     },
   ),
 ```
+![](https://github.com/lisen87/pw_edit_field/blob/master/screenshots/screenshot_001.png)

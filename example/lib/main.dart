@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pw_edit_field/PasswordWidget.dart';
+import 'package:pw_edit_field/pw_edit_field.dart';
 
 import 'package:flutter/foundation.dart';
 
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 8,
             ),
-            PasswordWidget(
+            PWEditField(
               textFieldCount: 8,
               textFieldSpace: 5,
               textFieldWidth: 30,
@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 8,
             ),
-            PasswordWidget(
+            PWEditField(
               textFieldCount: 6,
               textFieldWidth: 40,
               textFieldHeight: 40,
@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(
               height: 8,
             ),
-          PasswordWidget(
+            PWEditField(
             textFieldCount: 6,
             onInputDone: (pw){
               this.pw = pw;
@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: PasswordWidget(
+              child: PWEditField(
                 textFieldCount: 8,
                 textFieldSpace: 10,
                 textFieldWidth: 40,
