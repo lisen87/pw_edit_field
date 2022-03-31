@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -33,42 +33,55 @@ class _MyHomePageState extends State<MyHomePage> {
   String pw = "";
 
   TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-
-              SizedBox(height: 200,),
-
+              SizedBox(
+                height: 200,
+              ),
               GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     showDialog(
                         context: context,
                         barrierDismissible: false,
                         builder: (BuildContext context) {
-                    var mediaQueryData = MediaQueryData.fromWindow(ui.window);
+                          var mediaQueryData =
+                              MediaQueryData.fromWindow(ui.window);
                           return CupertinoAlertDialog(
                             content: Container(
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.all(Radius.circular(4))),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4))),
                               child: Center(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    Container(height: 200,color: Colors.teal,),
                                     Container(
-                                      child: Material(child: AnimatedContainer(
-                                        duration: const Duration(milliseconds: 300),
-                                        padding:EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
-                                          child: PWEditField(textFieldCount: 5,controller: _controller,))),
+                                      height: 200,
+                                      color: Colors.teal,
+                                    ),
+                                    Container(
+                                      child: Material(
+                                          child: AnimatedContainer(
+                                              duration: const Duration(
+                                                  milliseconds: 300),
+                                              padding: EdgeInsets.only(
+                                                  bottom: mediaQueryData
+                                                      .viewInsets.bottom),
+                                              child: PWEditField(
+                                                textFieldCount: 5,
+                                                controller: _controller,
+                                              ))),
                                     ),
                                   ],
                                 ),
@@ -76,7 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           );
                         });
-
                   },
                   child: Text("密码 ：" + pw)),
               SizedBox(
@@ -90,13 +102,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 obscureText: false,
                 textStyle: TextStyle(fontSize: 18),
                 keyboardType: TextInputType.number,
-                inputFormatters : [WhitelistingTextInputFormatter(RegExp("[0-9]")),],
+                inputFormatters: [
+                  FilteringTextInputFormatter(RegExp("[0-9]"), allow: true),
+                ],
                 focusDecoration: BoxDecoration(
                   border:
                       Border(bottom: BorderSide(color: Colors.teal, width: 2)),
                 ),
                 unFocusDecoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Colors.red, width: 2)),
+                  border:
+                      Border(bottom: BorderSide(color: Colors.red, width: 2)),
                 ),
                 onInputDone: (pw) {
                   this.pw = pw;
@@ -104,7 +119,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   setState(() {});
                 },
               ),
-
               SizedBox(
                 height: 8,
               ),
@@ -112,7 +126,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 textFieldCount: 6,
                 textFieldWidth: 40,
                 textFieldHeight: 40,
-                inputFormatters : [WhitelistingTextInputFormatter(RegExp("[0-9]")),],
+                inputFormatters: [
+                  FilteringTextInputFormatter(RegExp("[0-9]"), allow: true),
+                ],
                 autoFocus: true,
                 onInputDone: (pw) {
                   this.pw = pw;
@@ -125,17 +141,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 8,
               ),
               PWEditField(
-              textFieldCount: 6,
-              onInputDone: (pw){
-                this.pw = pw;
-                setState(() {
-                });
-              },
-            ),
+                textFieldCount: 6,
+                onInputDone: (pw) {
+                  this.pw = pw;
+                  setState(() {});
+                },
+              ),
               PWEditField(
-              textFieldCount: 3,
-              controller: _controller,
-            ),
+                textFieldCount: 3,
+                controller: _controller,
+                onInputDone: (text) {
+                  print(text);
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: PWEditField(

@@ -8,13 +8,13 @@ import 'package:flutter/services.dart';
 class PWEditField extends StatefulWidget {
   ///所有密码框输入完成后监听 Listen after all password boxes are entered
   ///
-  final ValueChanged<String> onInputDone;
+  final ValueChanged<String>? onInputDone;
 
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String>? onChanged;
 
   ///密码框数量 Number of password boxes
   ///
-  final int textFieldCount;
+  final int? textFieldCount;
 
   ///密码框宽度 Password box width
   ///
@@ -32,12 +32,13 @@ class PWEditField extends StatefulWidget {
   ///
   final bool autoFocus;
   final bool obscureText;
+  final bool isDoneClean;
   final TextStyle textStyle;
   final TextInputType keyboardType;
-  final List<TextInputFormatter> inputFormatters;
-  final BoxDecoration focusDecoration;
-  final BoxDecoration unFocusDecoration;
-  final TextEditingController controller;
+  final List<TextInputFormatter>? inputFormatters;
+  BoxDecoration? focusDecoration;
+  BoxDecoration? unFocusDecoration;
+  TextEditingController? controller;
 
   /// 只能输入数字 Only numbers can be entered
   /// inputFormatters = [WhitelistingTextInputFormatter(RegExp("[0-9]")),]
@@ -49,6 +50,7 @@ class PWEditField extends StatefulWidget {
     this.textFieldSpace = 3,
     this.autoFocus = false,
     this.obscureText = true,
+    this.isDoneClean = false,
     this.textStyle = const TextStyle(
       fontSize: 12,
       color: Colors.black54,
@@ -56,22 +58,27 @@ class PWEditField extends StatefulWidget {
     ),
     this.keyboardType = TextInputType.number,
     this.inputFormatters,
-    Decoration focusDecoration,
-    Decoration unFocusDecoration,
+    this.focusDecoration,
+    this.unFocusDecoration,
     this.onInputDone,
     this.onChanged,
-    TextEditingController controller,
-  })  : focusDecoration = focusDecoration ??
-            BoxDecoration(
-              border: Border.all(color: Colors.blue, width: 1),
-              borderRadius: BorderRadius.all(Radius.circular(2)),
-            ),
-        unFocusDecoration = unFocusDecoration ??
-            BoxDecoration(
-              border: Border.all(color: Colors.grey, width: 1),
-              borderRadius: BorderRadius.all(Radius.circular(2)),
-            ),
-        controller = controller == null ? TextEditingController() : controller;
+    this.controller,
+    Key? key,
+  }) : super(
+          key: key,
+        ) {
+    this.controller ??= TextEditingController();
+    this.focusDecoration ??=
+        BoxDecoration(
+          border: Border.all(color: Colors.blue, width: 1),
+          borderRadius: BorderRadius.all(Radius.circular(2)),
+        );
+    this.unFocusDecoration ??=
+        BoxDecoration(
+          border: Border.all(color: Colors.grey, width: 1),
+          borderRadius: BorderRadius.all(Radius.circular(2)),
+        );
+  }
 
   @override
   State<StatefulWidget> createState() {
@@ -97,8 +104,8 @@ class PWEditFieldState extends State<PWEditField> {
 
   @override
   Widget build(BuildContext context) {
-    double w = widget.textFieldCount * widget.textFieldWidth +
-        widget.textFieldCount * widget.textFieldSpace * 2;
+    double w = widget.textFieldCount! * widget.textFieldWidth +
+        widget.textFieldCount! * widget.textFieldSpace * 2;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Stack(
@@ -113,7 +120,6 @@ class PWEditFieldState extends State<PWEditField> {
               children: getChildren(),
             ),
           ),
-
         ],
       ),
     );
@@ -121,7 +127,7 @@ class PWEditFieldState extends State<PWEditField> {
 
   List<Widget> getChildren() {
     List<Widget> list = [];
-    for (int i = 0; i < widget.textFieldCount; i++) {
+    for (int i = 0; i < widget.textFieldCount!; i++) {
       list.add(getChild(i));
     }
     return list;
@@ -134,7 +140,7 @@ class PWEditFieldState extends State<PWEditField> {
         onTap: () {
           _focusNode.unfocus();
           FocusScope.of(context).requestFocus(_focusNode);
-          _currentIndex = widget.controller.text.length;
+          _currentIndex = widget.controller?.text.length ?? 0 ;
           setState(() {});
         },
         child: Container(
@@ -153,8 +159,8 @@ class PWEditFieldState extends State<PWEditField> {
 
   Widget getTextWidget(int index) {
     String data = "";
-    String text = widget.controller.text;
-    if (text.length > index) {
+    String? text = widget.controller?.text;
+    if (text != null && text.length > index) {
       data = widget.obscureText ? "●" : text.substring(index, index + 1);
     }
     return Text(
@@ -193,15 +199,17 @@ class PWEditFieldState extends State<PWEditField> {
         textAlign: TextAlign.center,
         onChanged: (String text) {
           if (widget.onChanged != null) {
-            widget.onChanged(text);
+            widget.onChanged!(text);
           }
           _currentIndex = text.length;
           setState(() {});
           if (widget.onInputDone != null &&
               text.length == widget.textFieldCount) {
-            widget.onInputDone(widget.controller.text);
-            widget.controller.text = "";
+            widget.onInputDone!(widget.controller!.text);
             _focusNode.unfocus();
+            if(widget.isDoneClean){
+              widget.controller!.text = "";
+            }
           }
         },
       ),
@@ -213,5 +221,4 @@ class PWEditFieldState extends State<PWEditField> {
     _focusNode.dispose();
     super.dispose();
   }
-
 }
