@@ -139,9 +139,11 @@ class PWEditFieldState extends State<PWEditField> {
       child: GestureDetector(
         onTap: () {
           _focusNode.unfocus();
-          FocusScope.of(context).requestFocus(_focusNode);
-          _currentIndex = widget.controller?.text.length ?? 0 ;
-          setState(() {});
+          Future.delayed(Duration(microseconds: 100),(){
+            FocusScope.of(context).requestFocus(_focusNode);
+            _currentIndex = widget.controller?.text.length ?? 0 ;
+            setState(() {});
+          });
         },
         child: Container(
           decoration: _currentIndex == index
